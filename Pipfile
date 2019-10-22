@@ -6,8 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+gunicorn = "*"
 falcon = "*"
-sqlalchemy = "*"
 
 [requires]
 python_version = "3.6"
