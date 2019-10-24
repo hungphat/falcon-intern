@@ -22,7 +22,7 @@ class HiResource:
 
 class HolaResource:
     def on_get(self, req, resp, name):
-        if name == None:
+        if name == None:            #TODO: làm sao để em lấy đuoc value name từ URL để em so sánh
             resp.body = ('Must have name')
         else:
             resp.body = (f'Hello {name}')
