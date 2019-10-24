@@ -7,8 +7,9 @@ verify_ssl = true
 
 [packages]
 gunicorn = "*"
-falcon = "==1.3.0"  # required fix version
+falcon = "==1.3.0"
 pytest = "*"
+httpie = "*"
 
 [requires]
 python_version = "3.6"

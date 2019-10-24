@@ -27,3 +27,9 @@ class Test(testing.TestCase):
         r = self.simulate_get(f'/hi')
         assert r.status_code == 200
         assert r.text == f'Good Afternoon'
+
+    def test_01c(self):
+        INPUT_name = 'phat'
+        r = self.simulate_get(f'/hola/{INPUT_name}')
+        assert r.status_code == 200
+        assert r.text == f'Hello {INPUT_name}'
