@@ -1,5 +1,6 @@
 import falcon
 import datetime
+import json
 from string import punctuation
 
 class HealthResource:
@@ -35,12 +36,27 @@ class HiResource:
 class HolaResource:
     def on_get(self, req, resp, name=None):
         if name is None:
-            resp.body = ('Must have name')
+            resp.status = falcon.HTTP_404
+            raise falcon.HTTPBadRequest('Param :name is required')
         else:
-            resp.body = (f'Hello {name}')
+            try:
+                int(name)
+                resp.status = falcon.HTTP_404
+                raise falcon.HTTPBadRequest('Param :name must be a valid string')
+            except ValueError:
+                count = 0
+                for i in name:
+                    count += punctuation.count(i)
+                if count > 0:
+                    resp.status = falcon.HTTP_404
+                    raise falcon.HTTPBadRequest('Param :name must be a valid string')
+                else:
+                    resp.body = (f'Hola {name}')
+
 
 
 api = falcon.API()
+api.req_options.auto_parse_form_urlencoded=True
 api.add_route('/health', HealthResource())
 api.add_route('/hi', HiResource())
 api.add_route('/hello/{name}', HelloResource())
