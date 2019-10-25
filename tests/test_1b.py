@@ -29,16 +29,3 @@ class Test(testing.TestCase):
         assert r.status_code == 200
         assert r.text == f'Hello {INPUT_name}'
 
-    def test_tc04(self):
-        INPUT_name = 'some name'
-        r = self.simulate_get(f'/hola/{INPUT_name}')
-        assert r.status_code == 200
-        assert r.text == f'Hello {INPUT_name}'
-
-    def test_tc04b(self):
-        INPUT_name = ''
-        r = self.simulate_get(f'/hola/{INPUT_name}')
-        assert r.status_code == 200
-        assert r.text == f'Hello {INPUT_name}'
-
-
