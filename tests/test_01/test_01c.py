@@ -1,5 +1,5 @@
 from falcon import testing
-from api_code.app import api
+from api_code.Challenge_1.app import api
 
 
 def setUpModule():    pass  # nothing here for now
@@ -30,7 +30,7 @@ class Test(testing.TestCase):
         assert 'Param :name is required' in e
 
     def test_not_valid(self):
-        INPUT_name = '1!a3'
+        INPUT_name = '11233'
         r = self.simulate_get(f'/hola/{INPUT_name}')
         assert r.status_code != 200
         e = r.json.get('title');
