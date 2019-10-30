@@ -1,6 +1,6 @@
 from falcon import testing
 import json
-from api_code.Challenge_2.app import api
+from api_code.Challenge_2.app2b import api
 
 
 def setUpModule():    pass  # nothing here for now
