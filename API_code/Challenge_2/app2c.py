@@ -1,5 +1,6 @@
 import falcon
 import json
+from falcon import media
 from string import punctuation
 
 class HealthResource:
@@ -22,24 +23,20 @@ class FormResource(object):
 
 class FormBodyResource(object):
     def on_post(self, req, resp):
-        firstname = req.get_param("firstname")
-        lastname  = req.get_param("lastname")
+        #body = json.loads(req.stream.read())
+        body = req.media  # 2 code tuong duong
+        firstname = body['fname']
+        lastname  = body['lname']
         content = {
-            'firstname': '{firstname}'.format(firstname=firstname),
-            'lastname' : '{lastname}' .format(lastname=lastname)
+            'fname': '{firstname}'.format(firstname=firstname),
+            'lname': '{lastname}'.format(lastname=lastname)
         }
 
         resp.body = json.dumps(content)
 
 
-
 api = falcon.API()
 api.req_options.auto_parse_form_urlencoded= True
 api.add_route('/health', HealthResource())
-api.add_route('/hello/{name}/{lastname}', HelloResource())
-api.add_route('/hello/{name}', HelloResource())
-api.add_route('/hello/', HelloResource())
-api.add_route('/hola/{name}', HolaResource())
-api.add_route('/hola/', HolaResource())
-api.add_route('/form', FormResource())
-api.add_route('/formbody', FormBodyResource())
+api.add_route('/form/', FormResource())
+api.add_route('/hello', FormBodyResource())

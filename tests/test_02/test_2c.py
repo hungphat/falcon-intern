@@ -71,7 +71,28 @@ class Test(testing.TestCase):
         first_name = 'some first name'
         last_name = 'some last name'
         r = self.simulate_post(f'/hello/', body=json.dumps({'fname': {first_name},'lname': {last_name}}))
-        expected_out = json.dumps({'message': f'hello {first_name} {last_name}'})
+        # r = self.simulate_post(f'/hello/', body=json.dumps({'fname': {first_name},'lname': {last_name}}))
+        # expected_out = json.dumps({'message': f'Hello {first_name} {last_name}'})
+
         assert r.status_code == 200
-        assert r.text == expected_out
+        # assert r.text == expected_out
+
+    def test_tc05(self):
+        first_name = 'some first name'
+        last_name = 'some last name'
+        d = {
+            'fname': first_name,
+            'lname': last_name
+        }
+        expected_out = {
+            'fname': 'some first name',
+            'lname': 'some last name'
+        }
+        r = self.simulate_post(f'/hello/', body=json.dumps(d))
+        # r = self.simulate_post(f'/hello/', body=json.dumps({'fname': {first_name},'lname': {last_name}}))
+
+        assert r.status_code == 200
+        assert expected_out == r.json
+
+
 
