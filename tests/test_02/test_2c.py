@@ -84,10 +84,9 @@ class Test(testing.TestCase):
             'fname': first_name,
             'lname': last_name
         }
-        expected_out = {
-            'fname': 'some first name',
-            'lname': 'some last name'
-        }
+        expected_out = json.dumps({
+            'message': f'Hello {first_name} {last_name}',
+        })
         r = self.simulate_post(f'/hello/', body=json.dumps(d))
         # r = self.simulate_post(f'/hello/', body=json.dumps({'fname': {first_name},'lname': {last_name}}))
 
