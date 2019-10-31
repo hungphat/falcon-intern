@@ -28,8 +28,7 @@ class FormBodyResource(object):
         firstname = body['fname']
         lastname  = body['lname']
         content = {
-            'fname': '{firstname}'.format(firstname=firstname),
-            'lname': '{lastname}'.format(lastname=lastname)
+            'message': f'Hello{firstname} {lastname}'
         }
 
         resp.body = json.dumps(content)
