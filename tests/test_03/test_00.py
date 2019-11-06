@@ -1,6 +1,6 @@
 from falcon import testing
 import json
-from api_code.challenge_3.crud import api
+from api_code.challenge_3.crud_without_auto import api
 
 
 def setUpModule():    pass  # nothing here for now
@@ -23,9 +23,9 @@ class Test(testing.TestCase):
 
     def test_02(self):
         body = {
-            'name'    : 'Trang',
+            'name'    : 'Trung',
             'dob'     : '1993-11-11',
-            'id'      : '4',
+            'id'      : '9',
             'address' : 'Ha Noi',
             'phone'   : '1234445'
         }

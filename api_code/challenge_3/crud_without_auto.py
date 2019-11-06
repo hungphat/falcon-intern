@@ -63,7 +63,7 @@ class CustomersResource(object):
             resp.body = json.dumps(Hello)
 
 #------Create------
-    def on_post(self, req, resp):
+    def on_post(self, req, resp): #TODO : Anh Nam xem giup em viet dung y anh chua a ?
         body = req.media
         adduser = Customers(id        =  body['id'],
                             name      =  body['name'],
@@ -76,18 +76,12 @@ class CustomersResource(object):
 
 #-----Update------
     def on_put(self, req, resp, userid=None):
-        x = dataquery.get(userid)
-        x.address = 'Hoang Sa'
-        x.update_at = datetime.now()
-        data_sess.commit()
+        pass
 
 
 #-- Delete User
-    def on_delete(self, req, resp):
-        x = dataquery.get(4)
-        data_sess.delete(x)
-        data_sess.commit()
-
+    def on_delete(self, req, resp, userid=None):
+        pass
 #-----API Routing-----
 api = falcon.API()
 api.req_options.auto_parse_form_urlencoded= True

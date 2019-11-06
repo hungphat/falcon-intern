@@ -57,6 +57,7 @@ class CustomersCollectionResource(CollectionResource):
 class CustomersResource(SingleResource):
     model = Customers
 
+
 #----- API Routing -----
 
 api = falcon.API(middleware=[Middleware()],)
