@@ -3,26 +3,25 @@ import json
 from falcon import media
 from string import punctuation
 
+
 class HealthResource:
     def on_get(self, req, res):
         content = {}
         res.body = json.dumps(content)
-
-
 
 class FormResource(object):
     def on_post(self, req, resp):
         firstname = req.get_param("firstname")
         lastname  = req.get_param("lastname")
         content = {
-            'firstname': '{firstname}'.format(firstname=firstname),
-            'lastname' : '{lastname}' .format(lastname=lastname)
+            'firstname': f'{firstname}',
+            'lastname' : f'{lastname}'
         }
 
         resp.body = json.dumps(content)
 
 class FormBodyResource(object):
-    def on_post(self, req, resp):
+    def on_post(self, req, resp, userid=None):
         # body = json.loads(req.stream.read())
         body = req.media  # 2 code tuong duong
         for k,v in body.items():
@@ -44,11 +43,14 @@ class FormBodyResource(object):
         name =body['fname']
         lastname = body['lname']
         content = {
-            'message': 'Hello{name} {lastname}'.format(name=name, lastname=lastname)
+            'message': f'Hello{name} {lastname}'
         }
         resp.body = json.dumps(content)
 
 
+
+
+#----- API Routing------
 api = falcon.API()
 api.req_options.auto_parse_form_urlencoded= True
 api.add_route('/health', HealthResource())
