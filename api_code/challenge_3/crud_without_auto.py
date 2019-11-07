@@ -28,20 +28,20 @@ class Customers(Base):
     id            = Column(Integer,    primary_key=True)
     name          = Column(String)
     dob           = Column(Date)
-    update_at     = Column(DateTime)
+    updated_at     = Column(DateTime)
 
-    def __init__(self,  id,  name,   dob,   update_at):
+    def __init__(self,  id,  name,   dob,   updated_at):
         self.id         = id
         self.name       = name
         self.dob        = dob
-        self.update_at  = update_at
+        self.updated_at  = updated_at
 
     def to_dict(self):
         d = {
             "id"         : self.id,
             "name"       : self.name,
             "dob"        : self.dob.__str__(),
-            "update_at"  : self.update_at.__str__()
+            "updated_at"  : self.updated_at.__str__()
         }
         return d
 
