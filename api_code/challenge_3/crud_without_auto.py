@@ -1,5 +1,5 @@
 from sqlalchemy import *
-from sqlalchemy.orm import sessionmaker,class_mapper
+from sqlalchemy.orm import sessionmaker,class_mapper,scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime,date
 import json
@@ -17,75 +17,76 @@ class data_base:
     engine = create_engine(conect_data)
     Session = sessionmaker(bind=engine)
     session = Session()
+
 dt = datetime.now()
 Base = declarative_base()
 data_sess = data_base.session
+
 
 class Customers(Base):
     __tablename__ = 'customers'
     id            = Column(Integer,    primary_key=True)
     name          = Column(String)
-    birth         = Column(Date)
-    address       = Column(String)
-    phone         = Column(String)
+    dob           = Column(Date)
     update_at     = Column(DateTime)
 
-    def __init__(self,  id,  name,   birth,  address,   phone,    update_at):
-        self.id      = id
-        self.name    = name
-        self.birth   = birth
-        self.address = address
-        self.phone   = phone
+    def __init__(self,  id,  name,   dob,   update_at):
+        self.id         = id
+        self.name       = name
+        self.dob        = dob
         self.update_at  = update_at
-id_list = []
+
+    def to_dict(self):
+        d = {
+            "id"         : self.id,
+            "name"       : self.name,
+            "dob"        : self.dob.__str__(),
+            "update_at"  : self.update_at.__str__()
+        }
+        return d
+
 dataquery = data_sess.query(Customers)
-for read in dataquery:
-    id_list.append(read.id)
-
-class HealthResource:
-    def on_get(self, req, res):
-        content = {}
-        res.body = json.dumps(content)
-
+data = dataquery.all()
 #------CRUD with falcon-------
 
-class CustomersResource(object):
+class CustomersResource:
 
-# ---Read---
-    def on_get(self, resp, req, userid=None):
-        if int(userid) not in id_list:
-            resp.status = falcon.HTTP_404
-            raise falcon.HTTPBadRequest('ID not in database')
+#------Read------
+    def on_get(self, req, resp, id=None):
+        if id is None:
+            list_data = []
+            data = dataquery.all()
+            for customer in data:
+                list_data.append(Customers.to_dict(customer))
+            resp.body = json.dumps(list_data)
+            resp.status = falcon.HTTP_200
         else:
-            Hello = {
-                'Message' : 'Welcome'
-            }
-            resp.body = json.dumps(Hello)
+            user = dataquery.get(int(id))
+            deltail = Customers.to_dict(user)
+            resp.body = json.dumps(deltail)
+            resp.status = falcon.HTTP_200
+
 
 #------Create------
-    def on_post(self, req, resp): #TODO : Anh Nam xem giup em viet dung y anh chua a ?
+    def on_post(self, req, resp):
         body = req.media
-        adduser = Customers(id        =  body['id'],
-                            name      =  body['name'],
-                            birth     =  body['dob'],
-                            address   =  body['address'],
-                            phone     =  body['phone'],
-                            update_at =  datetime.now())
-        data_sess.add(adduser)
-        data_sess.commit()
+        if body['name'] is None:
+            raise falcon.HTTPBadRequest('Data param name is required')
+        elif body['dob'] is None:
+            raise falcon.HTTPBadRequest('Data param dob is required')
 
-#-----Update------
+
+
+        #------Update------
     def on_put(self, req, resp, userid=None):
         pass
 
 
-#-- Delete User
+#------Delete User------
     def on_delete(self, req, resp, userid=None):
         pass
-#-----API Routing-----
+#------API Routing------
 api = falcon.API()
-api.req_options.auto_parse_form_urlencoded= True
-api.add_route('/health', HealthResource())
-api.add_route('/customer/', CustomersResource())
-api.add_route('/customer/{userid}', CustomersResource())
+api.add_route('/customers/', CustomersResource())
+api.add_route('/customers/{id}', CustomersResource())
 

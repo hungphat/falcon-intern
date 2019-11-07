@@ -18,18 +18,14 @@ class Test(testing.TestCase):
         r = self.simulate_get(f'/health')
 
     def test_01(self):
-        r = self.simulate_get(f'/customer/1')
+        r = self.simulate_get(f'/customers/')
         assert r.status_code == 200
 
     def test_02(self):
         body = {
-            'name'    : 'Trung',
-            'dob'     : '1993-11-11',
-            'id'      : '9',
-            'address' : 'Ha Noi',
-            'phone'   : '1234445'
+                "name": "Hang"
         }
-        r = self.simulate_post(f'/customer/', body=json.dumps(body))
+        r = self.simulate_post(f'/customers/', body=json.dumps(body))
         assert r.status_code == 200
 
     def test_03(self):
