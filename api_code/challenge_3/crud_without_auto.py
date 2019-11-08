@@ -116,8 +116,15 @@ class CustomersResource:
         data_sess.commit()
         resp.body = json.dumps(output)
 #------Delete User------
-    def on_delete(self, req, resp, userid=None):
-        pass
+    def on_delete(self, req, resp, id=None):
+        x = dataquery.get(int(id))
+        data_sess.delete(x)
+        data_sess.commit()
+        output = {
+            "id" : id
+        }
+        data_sess.commit()
+        resp.body = json.dumps(output)
 
 #------API Routing------
 api = falcon.API()

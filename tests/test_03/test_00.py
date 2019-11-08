@@ -46,24 +46,6 @@ class Test(testing.TestCase):
                 "dob": "2018-05-06",
                 "updated_at": "2019-08-16 04:05:01"
             },
-            {
-                "id": 6,
-                "name": "Trang",
-                "dob": "2018-10-10",
-                "updated_at": "2019-11-07 17:11:28.726258"
-            },
-            {
-                "id": 8,
-                "name": "Trang",
-                "dob": "2018-10-10",
-                "updated_at": "2019-11-07 17:11:58.563520"
-            },
-            {
-                "id": 9,
-                "name": "Trang",
-                "dob": "2018-10-10",
-                "updated_at": "2019-11-07 17:11:58.563520"
-            }
         ]
         r = self.simulate_get(f'/customers/')
         assert r.status_code == 200
@@ -82,11 +64,11 @@ class Test(testing.TestCase):
 
     def test_02(self):
         body = {
-
-                "dob": "2018-10-10",
+                "name" :  "phat",
+                "dob"  : "2018-10-10",
         }
         d = {
-            "id": 9
+            "id": 6
         }
         expected_out = json.dumps(d)
         r = self.simulate_post(f'/customers/', body=json.dumps(body))
@@ -99,6 +81,15 @@ class Test(testing.TestCase):
         }
         r = self.simulate_put(f'/customers/6', body=json.dumps(body))
         assert r.status_code == 200
+
+    def test_04(self):
+        input_delete = 6
+        body = {
+            "id" : input_delete
+        }
+        r = self.simulate_delete(f'/customers/{input_delete}')
+        assert r.status_code == 200
+
 
 
 
