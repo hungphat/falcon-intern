@@ -63,3 +63,10 @@ api.add_route('/hello/{name}', HelloResource())
 api.add_route('/hello/', HelloResource())
 api.add_route('/hola/{name}', HolaResource())
 api.add_route('/hola/', HolaResource())
+
+# for i in data:
+#     if i.name == body['name']:
+#         out_put = {
+#             "id": i.id
+#         }
+#         resp.body = json.dumps(out_put)
