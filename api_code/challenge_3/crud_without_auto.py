@@ -47,6 +47,7 @@ class Customers(Base):
 
 dataquery = data_sess.query(Customers)
 data = dataquery.all()
+
 #------CRUD with falcon-------
 
 class CustomersResource:
@@ -55,7 +56,6 @@ class CustomersResource:
     def on_get(self, req, resp, id=None):
         if id is None:
             list_data = []
-            data = dataquery.all()
             for customer in data:
                 list_data.append(Customers.to_dict(customer))
             resp.body = json.dumps(list_data)
@@ -70,21 +70,62 @@ class CustomersResource:
 #------Create------
     def on_post(self, req, resp):
         body = req.media
-        if body['name'] is None:
+        name = body.get('name')
+        dob  = body.get('dob')
+        if name is None:
+            resp.status = falcon.HTTP_404
             raise falcon.HTTPBadRequest('Data param name is required')
-        elif body['dob'] is None:
-            raise falcon.HTTPBadRequest('Data param dob is required')
+        elif dob is None:
+            resp.status = falcon.HTTP_404
+            raise falcon.HTTPBadRequest('Data dob is required')
+        else:
+            id_list = []
+            for i in data:
+                id_list.append(i.id)
+            auto_increaseid = (max(id_list)) + 1
+            mess = {
+                'id': auto_increaseid
+            }
+            adduser = Customers(id=auto_increaseid,name = name, dob = dob, updated_at= datetime.now())
+            data_sess.add(adduser)
+            data_sess.commit()
+            resp.body = json.dumps(mess)
 
 
-
-        #------Update------
-    def on_put(self, req, resp, userid=None):
-        pass
-
-
+#------Update------
+    def on_put(self, req, resp, id=None):
+        body = req.media
+        x = dataquery.get(int(id))
+        if body.get('name') is None:
+            x.dob = body['dob']
+            data_sess.commit()
+        elif body.get('dob') is None:
+            x.name = body['name']
+            data_sess.commit()
+        else:
+            x.name = body['name']
+            x.dob =  body['dob']
+            data_sess.commit()
+        x.updated_at = datetime.now()
+        output = {
+                "id": x.id,
+                "name": x.name,
+                "dob": f'{x.dob}',
+                "updated_at": f'{x.updated_at}'
+        }
+        data_sess.commit()
+        resp.body = json.dumps(output)
 #------Delete User------
-    def on_delete(self, req, resp, userid=None):
-        pass
+    def on_delete(self, req, resp, id=None):
+        x = dataquery.get(int(id))
+        data_sess.delete(x)
+        data_sess.commit()
+        output = {
+            "id" : id
+        }
+        data_sess.commit()
+        resp.body = json.dumps(output)
+
 #------API Routing------
 api = falcon.API()
 api.add_route('/customers/', CustomersResource())

@@ -4,7 +4,7 @@ CREATE TABLE customers(
 	id int PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	dob DATE NOT NULL ,
-	update_at timestamp
+	updated_at timestamp
 );
 
 
