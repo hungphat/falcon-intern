@@ -13,6 +13,7 @@ httpie = "*"
 sqlalchemy = "*"
 psycopg2 = "*"
 falcon-autocrud = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.6"

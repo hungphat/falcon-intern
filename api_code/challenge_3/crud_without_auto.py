@@ -2,16 +2,18 @@ from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker,class_mapper,scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime,date
+import os; from dotenv import load_dotenv  # Load .env automatically
 import json
 import falcon
 
 class data_base:
+    load_dotenv()
     conect_data = 'postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{db}'.format(
-        user='admin',
-        pwd='admin',
-        host='localhost',
-        port='5432',
-        db='customerdata'
+        user= os.environ.get('user'),
+        pwd=os.environ.get('pwd'),
+        host=os.environ.get('host'),
+        port=os.environ.get('port'),
+        db=os.environ.get('db')
     )
 
     engine = create_engine(conect_data)
