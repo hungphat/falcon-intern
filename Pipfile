@@ -11,8 +11,7 @@ falcon = "==1.3.0"
 pytest = "*"
 httpie = "*"
 sqlalchemy = "*"
-psycopg2 = "*"  #TODO Phat this is not working
-falcon-autocrud = "*"
+psycopg2 = "*"
 python-dotenv = "*"
 
 [requires]

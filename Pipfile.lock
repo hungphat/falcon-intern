@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0334a344ea125d4d18dc2a0f8cb94908e5507c21999c223fcdedc16786ddae17"
+            "sha256": "f9973b3a9e3aaf91e7eac1e2d714267a5d9404a1c7257d56a51c59d1560a8d19"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -52,13 +52,6 @@
             "index": "pypi",
             "version": "==1.3.0"
         },
-        "falcon-autocrud": {
-            "hashes": [
-                "sha256:8ff34b9b23a845fd40b6c902dd5768941c3cc03dba1837600812dcce3e73b93f"
-            ],
-            "index": "pypi",
-            "version": "==1.0.36"
-        },
         "gunicorn": {
             "hashes": [
                 "sha256:0806b5e8a2eb8ba9ac1be65d7b743ec896fc25f5d6cb16c5e051540157b315bb",
@@ -89,13 +82,6 @@
             ],
             "markers": "python_version < '3.8'",
             "version": "==0.23"
-        },
-        "jsonschema": {
-            "hashes": [
-                "sha256:2fa0684276b6333ff3c0b1b27081f4b2305f0a36cf702a23db50edb141893c3f",
-                "sha256:94c0a13b4a0616458b42529091624e66700a17f847453e52279e35509a5b7631"
-            ],
-            "version": "==3.1.1"
         },
         "more-itertools": {
             "hashes": [
@@ -157,12 +143,6 @@
                 "sha256:4ca62001be367f01bd3e92ecbb79070272a9d4964dce6a48a82ff0b8bc7e683a"
             ],
             "version": "==2.4.5"
-        },
-        "pyrsistent": {
-            "hashes": [
-                "sha256:eb6545dbeb1aa69ab1fb4809bfbf5a8705e44d92ef8fc7c2361682a47c46c778"
-            ],
-            "version": "==0.15.5"
         },
         "pytest": {
             "hashes": [
